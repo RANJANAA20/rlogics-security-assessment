@@ -1,0 +1,5 @@
+LAST SEEN   TYPE     REASON      OBJECT                MESSAGE
+4m48s       Normal   Scheduled   pod/kyverno-allowed   Successfully assigned kyverno-test/kyverno-allowed to desktop-control-plane
+4m47s       Normal   Pulled      pod/kyverno-allowed   Container image "nginxinc/nginx-unprivileged@sha256:808f7846d21a9c94cf53833e8807a00a33fd0b65cc47fb05b79efe366c2d201f" already present on machine and can be accessed by the pod
+4m47s       Normal   Created     pod/kyverno-allowed   Container created
+4m47s       Normal   Started     pod/kyverno-allowed   Container started

@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: assessment-web-policy
+  namespace: assessment-secure
+spec:
+  podSelector:
+    matchLabels:
+      app: assessment-web
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              access-assessment-web: "true"
+      ports:
+        - protocol: TCP
+          port: 8080

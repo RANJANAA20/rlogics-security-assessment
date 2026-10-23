@@ -1,0 +1,158 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"assessment-web"},"name":"assessment-web","namespace":"assessment-secure"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"assessment-web"}},"template":{"metadata":{"labels":{"app":"assessment-web"}},"spec":{"automountServiceAccountToken":false,"containers":[{"image":"nginxinc/nginx-unprivileged@sha256:808f7846d21a9c94cf53833e8807a00a33fd0b65cc47fb05b79efe366c2d201f","name":"web","ports":[{"containerPort":8080,"name":"http"}],"resources":{"limits":{"cpu":"500m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true},"volumeMounts":[{"mountPath":"/tmp","name":"tmp"},{"mountPath":"/var/cache/nginx","name":"cache"},{"mountPath":"/var/run","name":"run"}]}],"securityContext":{"runAsGroup":101,"runAsNonRoot":true,"runAsUser":101,"seccompProfile":{"type":"RuntimeDefault"}},"serviceAccountName":"assessment-web-sa","volumes":[{"emptyDir":{},"name":"tmp"},{"emptyDir":{},"name":"cache"},{"emptyDir":{},"name":"run"}]}}}}
+    creationTimestamp: "2026-10-15T16:39:01Z"
+    generation: 1
+    labels:
+      app: assessment-web
+    name: assessment-web
+    namespace: assessment-secure
+    resourceVersion: "4299"
+    uid: a891f80a-6d2b-4e2f-a1f5-fbf989bffcbe
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: assessment-web
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: assessment-web
+      spec:
+        automountServiceAccountToken: false
+        containers:
+        - image: nginxinc/nginx-unprivileged@sha256:808f7846d21a9c94cf53833e8807a00a33fd0b65cc47fb05b79efe366c2d201f
+          imagePullPolicy: IfNotPresent
+          name: web
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmp
+          - mountPath: /var/cache/nginx
+            name: cache
+          - mountPath: /var/run
+            name: run
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsGroup: 101
+          runAsNonRoot: true
+          runAsUser: 101
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: assessment-web-sa
+        serviceAccountName: assessment-web-sa
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: tmp
+        - emptyDir: {}
+          name: cache
+        - emptyDir: {}
+          name: run
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-10-15T16:39:11Z"
+      lastUpdateTime: "2026-10-15T16:39:11Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-10-15T16:39:02Z"
+      lastUpdateTime: "2026-10-15T16:39:11Z"
+      message: ReplicaSet "assessment-web-7b58fd869f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    terminatingReplicas: 0
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"assessment-web","namespace":"assessment-secure"},"spec":{"ports":[{"name":"http","port":80,"targetPort":8080}],"selector":{"app":"assessment-web"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-10-15T16:39:01Z"
+    name: assessment-web
+    namespace: assessment-secure
+    resourceVersion: "4253"
+    uid: efebb5fa-2daf-45c8-a79e-4d2730a97f0c
+  spec:
+    clusterIP: 10.96.193.111
+    clusterIPs:
+    - 10.96.193.111
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: assessment-web
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","automountServiceAccountToken":false,"kind":"ServiceAccount","metadata":{"annotations":{},"name":"assessment-web-sa","namespace":"assessment-secure"}}
+    creationTimestamp: "2026-10-15T16:39:01Z"
+    name: assessment-web-sa
+    namespace: assessment-secure
+    resourceVersion: "4250"
+    uid: 7712e925-c043-424e-a919-31944770c236
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    creationTimestamp: "2026-10-15T16:32:55Z"
+    name: default
+    namespace: assessment-secure
+    resourceVersion: "3704"
+    uid: b70c392d-b574-440b-85ed-fbe10a04bf87
+kind: List
+metadata:
+  resourceVersion: ""

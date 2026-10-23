@@ -1,0 +1,7 @@
+FAIL: Secure manifest (expected exit 0, got 127)
+FAIL: Risky manifest (expected exit 1, got 127)
+FAIL: Invalid YAML (expected exit 2, got 127)
+FAIL: Missing file (expected exit 2, got 127)
+
+Tests passed: 0
+Tests failed: 4

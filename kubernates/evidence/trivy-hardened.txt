@@ -1,0 +1,16 @@
+
+Report Summary
+
+┌─────────────────────┬────────────┬───────────────────┐
+│       Target        │    Type    │ Misconfigurations │
+├─────────────────────┼────────────┼───────────────────┤
+│ assessment-web.yaml │ kubernetes │         0         │
+├─────────────────────┼────────────┼───────────────────┤
+│ namespace.yaml      │ kubernetes │         0         │
+├─────────────────────┼────────────┼───────────────────┤
+│ network-policy.yaml │ kubernetes │         0         │
+└─────────────────────┴────────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+

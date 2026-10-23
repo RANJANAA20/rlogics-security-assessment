@@ -1,0 +1,66 @@
+name: Promptfoo local security eval
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: promptfoo-local-security
+  cancel-in-progress: false
+
+jobs:
+  eval:
+    runs-on: [self-hosted, windows]
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.22.0"
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Start app
+        run: docker compose -p promptfoo-ci up -d --build
+
+      - name: Wait for app and Ollama
+        shell: pwsh
+        run: |
+          $deadline = (Get-Date).AddMinutes(5)
+          do {
+            try {
+              $health = Invoke-RestMethod http://127.0.0.1:8000/health -TimeoutSec 5
+              if ($health.ollama -ne "connected") { throw "Ollama is not connected" }
+              break
+            } catch {
+              if ((Get-Date) -ge $deadline) { throw }
+              Start-Sleep -Seconds 5
+            }
+          } while ($true)
+
+      - name: Run Promptfoo eval
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force reports\promptfoo | Out-Null
+          npx promptfoo validate -c promptfooconfig.yaml
+          npx promptfoo eval -c promptfooconfig.yaml --max-concurrency 1 --delay 250 --no-cache --no-share -o reports/promptfoo/ci.json -o reports/promptfoo/ci.html -o reports/promptfoo/ci.junit.xml
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: promptfoo-evidence-${{ github.run_id }}
+          path: reports/promptfoo/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop app
+        if: always()
+        run: docker compose -p promptfoo-ci down

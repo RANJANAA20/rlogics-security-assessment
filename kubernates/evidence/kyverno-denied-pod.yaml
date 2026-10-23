@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kyverno-denied
+  namespace: kyverno-test
+spec:
+  containers:
+    - name: test
+      image: nginxinc/nginx-unprivileged@sha256:808f7846d21a9c94cf53833e8807a00a33fd0b65cc47fb05b79efe366c2d201f
+      securityContext:
+        privileged: true

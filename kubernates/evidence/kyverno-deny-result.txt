@@ -1,0 +1,7 @@
+Error from server: error when creating "kyverno-denied-pod.yaml": admission webhook "validate.kyverno.svc-fail" denied the request: 
+
+resource Pod/kyverno-test/kyverno-denied was blocked due to the following policies 
+
+disallow-privileged:
+  disallow-privileged-containers: 'validation failure: Privileged containers are not
+    allowed in kyverno-test.'

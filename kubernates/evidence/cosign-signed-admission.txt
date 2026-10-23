@@ -1,0 +1,7 @@
+Error from server: error when creating "evidence/cosign-signed-pod.yaml": admission webhook "mutate.kyverno.svc-fail" denied the request: 
+
+resource Pod/kyverno-test/cosign-signed-pod was blocked due to the following policies 
+
+verify-image-signatures:
+  verify-cosign-signature: 'failed to verify image docker.io/ranjanaa20y/kyverno-cosign-lab@sha256:c0a0c957eeb8ce3b2188b46ee1c666e69dbc32d5311c07d35ca09e1362520834:
+    .attestors[0].entries[0].keys: no signatures found'
