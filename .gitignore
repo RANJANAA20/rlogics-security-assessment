@@ -5,3 +5,8 @@
 *.pem
 *.key
 __pycache__/
+.git-old-backup/
+.vscode/
+.env
+.env.*
+__pycache__/

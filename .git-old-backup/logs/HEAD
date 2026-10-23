@@ -1,5 +1,0 @@
-0000000000000000000000000000000000000000 961729f74d55d5e1e456d4aba81cd37c8aff0d86 RANJANAA20 <ranjanaayuvaraj658@gmail.com> 1792600901 +0530	commit (initial): feat: complete DevSecOps lab pipeline and tools
-961729f74d55d5e1e456d4aba81cd37c8aff0d86 0000000000000000000000000000000000000000 RANJANAA20 <ranjanaayuvaraj658@gmail.com> 1792600921 +0530	Branch: renamed refs/heads/master to refs/heads/master
-961729f74d55d5e1e456d4aba81cd37c8aff0d86 961729f74d55d5e1e456d4aba81cd37c8aff0d86 RANJANAA20 <ranjanaayuvaraj658@gmail.com> 1792600921 +0530	Branch: renamed refs/heads/master to refs/heads/master
-961729f74d55d5e1e456d4aba81cd37c8aff0d86 936a1f8417dd9362d5956b2ab2b9977bccd62300 RANJANAA20 <ranjanaayuvaraj658@gmail.com> 1792600993 +0530	pull origin master --allow-unrelated-histories: Merge made by the 'ort' strategy.
-936a1f8417dd9362d5956b2ab2b9977bccd62300 a9108edc9b5bb356733bf19cd57ec8a70e1bf089 RANJANAA20 <ranjanaayuvaraj658@gmail.com> 1792743485 +0530	commit: Add security assessment labs and scan results
