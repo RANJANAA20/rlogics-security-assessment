@@ -1,0 +1,64 @@
+
+Report Summary
+
+┌──────────────────┬──────┬─────────────────┬─────────┐
+│      Target      │ Type │ Vulnerabilities │ Secrets │
+├──────────────────┼──────┼─────────────────┼─────────┤
+│ requirements.txt │ pip  │        6        │    -    │
+├──────────────────┼──────┼─────────────────┼─────────┤
+│ app.py           │ text │        -        │    1    │
+└──────────────────┴──────┴─────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+requirements.txt (pip)
+======================
+Total: 6 (UNKNOWN: 0, LOW: 1, MEDIUM: 4, HIGH: 1, CRITICAL: 0)
+
+┌──────────┬────────────────┬──────────┬────────┬───────────────────┬───────────────┬──────────────────────────────────────────────────────────────┐
+│ Library  │ Vulnerability  │ Severity │ Status │ Installed Version │ Fixed Version │                            Title                             │
+├──────────┼────────────────┼──────────┼────────┼───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ Flask    │ CVE-2023-30861 │ HIGH     │ fixed  │ 2.0.1             │ 2.3.2, 2.2.5  │ flask: Possible disclosure of permanent session cookie due   │
+│          │                │          │        │                   │               │ to missing Vary: Cookie...                                   │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2023-30861                   │
+│          ├────────────────┼──────────┤        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│          │ CVE-2026-27205 │ LOW      │        │                   │ 3.1.3         │ flask: Flask: Information disclosure via improper caching of │
+│          │                │          │        │                   │               │ session data                                                 │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-27205                   │
+├──────────┼────────────────┼──────────┤        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ requests │ CVE-2023-32681 │ MEDIUM   │        │ 2.25.1            │ 2.31.0        │ python-requests: Unintended leak of Proxy-Authorization      │
+│          │                │          │        │                   │               │ header                                                       │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2023-32681                   │
+│          ├────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│          │ CVE-2024-35195 │          │        │                   │ 2.32.0        │ requests: subsequent requests to the same host ignore cert   │
+│          │                │          │        │                   │               │ verification                                                 │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2024-35195                   │
+│          ├────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│          │ CVE-2024-47081 │          │        │                   │ 2.32.4        │ requests: Requests vulnerable to .netrc credentials leak via │
+│          │                │          │        │                   │               │ malicious URLs                                               │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2024-47081                   │
+│          ├────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│          │ CVE-2026-25645 │          │        │                   │ 2.33.0        │ requests: Requests: Security bypass due to predictable       │
+│          │                │          │        │                   │               │ temporary file creation                                      │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-25645                   │
+└──────────┴────────────────┴──────────┴────────┴───────────────────┴───────────────┴──────────────────────────────────────────────────────────────┘
+
+app.py (secrets)
+================
+Total: 1 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 1)
+
+CRITICAL: Stripe (stripe-secret-token)
+════════════════════════════════════════
+Stripe Secret Key
+────────────────────────────────────────
+ app.py:8 (offset: 154 bytes)
+────────────────────────────────────────
+   6   
+   7   # Intentional Hardcoded Secret for Semgrep/Trivy to catch
+   8 [ API_KEY = "****************************"
+   9   
+────────────────────────────────────────
+
+

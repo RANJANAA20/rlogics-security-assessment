@@ -1,0 +1,86 @@
+                   
+                   
+┌─────────────────┐
+│ 8 Code Findings │
+└─────────────────┘
+                                               
+  [36m[22m[24m  app-or-lab-target\Dockerfile[0m
+   ❯❯❱ dockerfile.security.missing-user.missing-user
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          By not specifying a USER, a program in the container may run as 'root'. This is a security hazard.
+          If an attacker can control a process running as root, they may have control over the container.   
+          Ensure that the last USER in a Dockerfile is a USER other than 'root'.                            
+          Details: https://sg.run/Gbvn                                                                      
+                                                                                                            
+           ▶▶┆ Autofix ▶ USER non-root CMD ["python", "app.py"]
+            7┆ CMD ["python", "app.py"]
+                                           
+  [36m[22m[24m  app-or-lab-target\app.py[0m
+   ❯❯❱ python.flask.security.injection.subprocess-injection.subprocess-injection
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          Detected user input entering a `subprocess` call unsafely. This could result in a command injection 
+          vulnerability. An attacker could use this vulnerability to execute arbitrary commands on the host,  
+          which allows them to download malware, scan sensitive data, or run any command they wish on the     
+          server. Do not let users choose the command to run. In general, prefer to use Python API versions of
+          system commands. If you must use subprocess, use a dictionary to allowlist a set of commands.       
+          Details: https://sg.run/5gW3                                                                        
+                                                                                                              
+           18┆ output = subprocess.check_output(f"ping -c 1 {target}", shell=True)
+   
+   ❯❯❱ python.lang.security.dangerous-subprocess-use.dangerous-subprocess-use
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          Detected subprocess function 'check_output' with user controlled data. A malicious actor could
+          leverage this to perform command injection. You may consider using 'shlex.escape()'.          
+          Details: https://sg.run/NWxp                                                                  
+                                                                                                        
+           18┆ output = subprocess.check_output(f"ping -c 1 {target}", shell=True)
+   
+   ❯❯❱ python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          Found 'subprocess' function 'check_output' with 'shell=True'. This is dangerous because this call 
+          will spawn the command using a shell process. Doing so propagates current shell settings and      
+          variables, which makes it much easier for a malicious actor to execute commands. Use 'shell=False'
+          instead.                                                                                          
+          Details: https://sg.run/J92w                                                                      
+                                                                                                            
+           ▶▶┆ Autofix ▶ False
+           18┆ output = subprocess.check_output(f"ping -c 1 {target}", shell=True)
+   
+    ❯❱ python.flask.security.audit.directly-returned-format-string.directly-returned-format-string
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          Detected Flask route directly returning a formatted string. This is subject to cross-site scripting
+          if user input can reach the string. Consider using the template engine instead and rendering pages 
+          with 'render_template()'.                                                                          
+          Details: https://sg.run/Zv6o                                                                       
+                                                                                                             
+           19┆ return f"<pre>{output.decode()}</pre>"
+   
+    ❯❱ python.django.security.injection.raw-html-format.raw-html-format
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          Detected user input flowing into a manually constructed HTML string. You may be accidentally       
+          bypassing secure methods of rendering HTML by manually constructing HTML and this could create a   
+          cross-site scripting vulnerability, which could let attackers steal sensitive user data. To be sure
+          this is safe, check that the HTML is rendered safely. Otherwise, use templates                     
+          (`django.shortcuts.render`) which will safely render HTML instead.                                 
+          Details: https://sg.run/oYj1                                                                       
+                                                                                                             
+           19┆ return f"<pre>{output.decode()}</pre>"
+   
+    ❯❱ python.flask.security.injection.raw-html-concat.raw-html-format
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          Detected user input flowing into a manually constructed HTML string. You may be accidentally       
+          bypassing secure methods of rendering HTML by manually constructing HTML and this could create a   
+          cross-site scripting vulnerability, which could let attackers steal sensitive user data. To be sure
+          this is safe, check that the HTML is rendered safely. Otherwise, use templates                     
+          (`flask.render_template`) which will safely render HTML instead.                                   
+          Details: https://sg.run/Pb7e                                                                       
+                                                                                                             
+           19┆ return f"<pre>{output.decode()}</pre>"
+   
+    ❯❱ python.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          Running flask app with host 0.0.0.0 could expose the server publicly.
+          Details: https://sg.run/eLby                                         
+                                                                               
+           22┆ app.run(host="0.0.0.0", port=5000)
+
